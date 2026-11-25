@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  llm-embedding-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: llm-embedding-api:latest
+    container_name: llm-embedding-api
+    ports:
+      - "8080:8080"
+    volumes:
+      # Persist models across container restarts
+      - llm-models:/app/models
+      # Alternative: Use host bind mount instead
+      # - D:\llm-models:/app/models
+    environment:
+      # Core settings
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      
+      # EmbeddingGemma-300m ONNX configuration (fp16 = standard ONNX ops, no custom ops needed)
+      - Embedding__ModelPath=/app/models/embeddinggemma-300m-fp16.onnx
+      - Embedding__MaxSequenceLength=2048
+      # POC OPTIMIZATION: 256d = 3x faster, 95% accuracy (change to 128 for even faster)
+      - Embedding__EmbeddingDimension=256
+      
+      # Auto-download settings
+      - Embedding__AutoDownload=true
+      - Embedding__DownloadTimeoutMinutes=60
+      
+      # Hugging Face source (public ONNX model - no token required)
+      - Embedding__HuggingFaceRepoId=onnx-community/embeddinggemma-300m-ONNX
+      - Embedding__HuggingFaceFilename=onnx/model_fp16.onnx
+      
+      # OPTIONAL: HuggingFace token (not required for this public model)
+      # Uncomment if you want to use a gated model
+      # - Embedding__HuggingFaceToken=${HUGGINGFACE_TOKEN:-}
+
+      # === API key authentication ===
+      # Static key hash (SHA-256 hex of the plaintext key — see tools/hash-key in the
+      # README for how to compute it). NEVER put the plaintext key here; set the hash
+      # via an env var / secret store. Repeat Auth__ApiKeys__1__..., __2__... for more keys.
+      - Auth__ApiKeys__0__KeyHash=${API_KEY_HASH:-}
+      - Auth__ApiKeys__0__Name=${API_KEY_NAME:-local-dev}
+      # - Auth__ApiKeys__0__TenantId=${API_KEY_TENANT_ID:-}
+
+      # OPTIONAL: remote validation against the organization service instead of (or
+      # in addition to) the static key above.
+      - Auth__RemoteValidation__Enabled=${AUTH_REMOTE_VALIDATION_ENABLED:-false}
+      - Auth__RemoteValidation__Endpoint=${AUTH_REMOTE_VALIDATION_ENDPOINT:-}
+
+      # === Rate limiting (requests/minute per API key, fallback per client IP) ===
+      - RateLimiting__PermitPerMinute=${RATE_LIMIT_PERMIT_PER_MINUTE:-120}
+      - RateLimiting__BatchPermitPerMinute=${RATE_LIMIT_BATCH_PERMIT_PER_MINUTE:-30}
+
+      # Logging
+      - Logging__LogLevel__Default=Information
+      - Logging__LogLevel__LlmEmbeddingApi=Information
+      - Logging__LogLevel__LlmEmbeddingApi.Services.ModelDownloader=Debug
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    
+    # Resource limits (adjust based on your needs)
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 4G
+
+volumes:
+  llm-models:
+    driver: local

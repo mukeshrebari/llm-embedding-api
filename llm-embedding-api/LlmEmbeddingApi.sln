@@ -1,0 +1,55 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11123.170
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LlmEmbeddingApi", "src\LlmEmbeddingApi\LlmEmbeddingApi.csproj", "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LlmEmbeddingApi.Tests", "tests\LlmEmbeddingApi.Tests\LlmEmbeddingApi.Tests.csproj", "{D967DC48-5641-4EFF-B3CE-BA509C3032D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{250B9E29-05DB-4003-9BA4-642A9F620380}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{0F956273-A218-40D1-8558-DD294676CF03}"
+	ProjectSection(SolutionItems) = preProject
+		docker\.dockerignore = docker\.dockerignore
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AzureDeploy", "AzureDeploy", "{AF85BAF8-60A6-48D5-B282-D562641729E9}"
+	ProjectSection(SolutionItems) = preProject
+		infra\Deploy-ACI.ps1 = infra\Deploy-ACI.ps1
+		docker-compose.yml = docker-compose.yml
+		infra\main.bicep = infra\main.bicep
+		infra\main.parameters.json = infra\main.parameters.json
+		infra\README.md = infra\README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D967DC48-5641-4EFF-B3CE-BA509C3032D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D967DC48-5641-4EFF-B3CE-BA509C3032D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D967DC48-5641-4EFF-B3CE-BA509C3032D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D967DC48-5641-4EFF-B3CE-BA509C3032D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0F956273-A218-40D1-8558-DD294676CF03} = {250B9E29-05DB-4003-9BA4-642A9F620380}
+		{AF85BAF8-60A6-48D5-B282-D562641729E9} = {250B9E29-05DB-4003-9BA4-642A9F620380}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2940FCDE-702D-418E-9E57-2AB778027DC5}
+	EndGlobalSection
+EndGlobal

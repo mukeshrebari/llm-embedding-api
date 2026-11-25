@@ -1,0 +1,26 @@
+# Local secrets; keep only the template
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Azure publish profiles (contain subscription and registry details)
+*.pubxml
+*.pubxml.user
+
+# ONNX Runtime profiler output
+onnxruntime_profile_*.json
+
+# Build output
+bin/
+obj/
+**/bin/
+**/obj/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user

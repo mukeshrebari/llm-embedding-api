@@ -1,0 +1,107 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerGroupName": {
+      "value": "llm-embedding-api-prod"
+    },
+    "location": {
+      "value": "centralindia"
+    },
+    "containerImage": {
+      "value": "<acr-name>.azurecr.io/llm-embedding-api:latest"
+    },
+    "registryServer": {
+      "value": "<acr-name>.azurecr.io"
+    },
+    "registryUsername": {
+      "value": ""
+    },
+    "registryPassword": {
+      "value": ""
+    },
+    "userAssignedIdentityResourceId": {
+      "value": ""
+    },
+    "userAssignedIdentityClientId": {
+      "value": "<MANAGED_IDENTITY_CLIENT_ID>"
+    },
+    "dnsNameLabel": {
+      "value": "llm-embedding-api"
+    },
+    "containerPort": {
+      "value": 8080
+    },
+    "cpuCores": {
+      "value": 2
+    },
+    "memoryInGB": {
+      "value": 4
+    },
+    "huggingFaceToken": {
+      "value": ""
+    },
+    "autoDownloadModel": {
+      "value": true
+    },
+    "maxSequenceLength": {
+      "value": 2048
+    },
+    "embeddingDimension": {
+      "value": 768
+    },
+    "logAnalyticsWorkspaceId": {
+      "value": ""
+    },
+    "logAnalyticsWorkspaceKey": {
+      "value": ""
+    },
+    "vnetResourceId": {
+      "value": ""
+    },
+    "storageAccountName": {
+      "value": "<storage-account>"
+    },
+    "storageAccountKey": {
+      "value": "REPLACE_AT_DEPLOY_TIME_FROM_KEY_VAULT_OR_CLI_PARAM_OVERRIDE"
+    },
+    "fileShareName": {
+      "value": "llm-models"
+    },
+    "apiKeyHash": {
+      "value": "REPLACE_WITH_SHA256_HEX_OF_KEY_FROM_KEY_VAULT"
+    },
+    "apiKeyName": {
+      "value": "aci-deployment"
+    },
+    "authRemoteValidationEnabled": {
+      "value": false
+    },
+    "authRemoteValidationEndpoint": {
+      "value": ""
+    },
+    "rateLimitPermitPerMinute": {
+      "value": 120
+    },
+    "rateLimitBatchPermitPerMinute": {
+      "value": 30
+    },
+    "subnetName": {
+      "value": "aci-subnet"
+    },
+    "enablePublicIp": {
+      "value": true
+    },
+    "restartPolicy": {
+      "value": "Always"
+    },
+    "tags": {
+      "value": {
+        "Application": "LLM-Embedding-API",
+        "Environment": "Production",
+        "CostCenter": "AI-Services",
+        "ManagedBy": "Bicep"
+      }
+    }
+  }
+}
